@@ -1,18 +1,50 @@
-import React from "react";
+import React, { Component } from "react";
 import "./App.scss";
-import store from "./store";
 import Login from "./components/login";
-import { Provider } from "react-redux";
-import { Route, BrowserRouter as Router } from "react-router-dom";
+import { connect } from "react-redux";
+import { Route, BrowserRouter, Redirect } from "react-router-dom";
 
-function App() {
-  return (
-    <Provider store={store}>
-      <Router>
-        <Route path="/" component={Login} />
-      </Router>
-    </Provider>
-  );
+class App extends Component {
+  render() {
+    return (
+      <BrowserRouter>
+        <Route
+          path="/"
+          exact
+          render={() => (
+            <Redirect to={`/${this.props.user ? "home" : "login"}`} />
+          )}
+        />
+        <Route
+          path="/login"
+          exact
+          render={() => (this.props.user ? <Redirect to="/home" /> : <Login />)}
+        />
+        <Route
+          path="/register"
+          exact
+          render={() => (this.props.user ? <Redirect to="/home" /> : <Login />)}
+        />
+        <Route
+          path="/home"
+          exact
+          render={() =>
+            this.props.user ? <h1>hello</h1> : <Redirect to="/login" />
+          }
+        />
+      </BrowserRouter>
+    );
+  }
 }
-
-export default App;
+const mapPropsToStore = ({ Authentication }) => {
+  return {
+    user: Authentication.user
+  };
+};
+const mapDispatchToProps = dispach => {
+  return {};
+};
+export default connect(
+  mapPropsToStore,
+  mapDispatchToProps
+)(App);

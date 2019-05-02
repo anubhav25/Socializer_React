@@ -1,13 +1,13 @@
 import React, { Component } from "react";
+import * as actions from "../actions";
+import { connect } from "react-redux";
 import "./login.scss";
 
 class LoginForm extends Component {
   state = {
-    loading: false,
     wrongPasswordAlert: "",
     username: "",
-    password: "",
-    loginError: ""
+    password: ""
   };
   title = "Socializer";
   usernameRef = null;
@@ -15,25 +15,29 @@ class LoginForm extends Component {
   login(e) {
     e.preventDefault();
     this.setState({
-      loading: true,
       loginError: "",
       wrongPasswordAlert: "none"
     });
-    setTimeout(() => {
-      if (this.state.username === "anubhav" && this.state.password === "a") {
-        this.setState({
-          loading: false,
-          wrongPasswordAlert: "none"
-        });
-      } else {
-        this.setState({
-          loading: false,
-          loginError: "Wrong Password",
-          wrongPasswordAlert: "block"
-        });
-      }
-      //       this.router.navigate(['/home']);
-    }, 3000);
+    this.props.dispachLogin({
+      username: this.state.username.toLowerCase(),
+      password: this.state.password
+    });
+    // v-arjjos@microsoft.com
+    // setTimeout(() => {
+    //   if (this.state.username === "anubhav" && this.state.password === "a") {
+    //     this.setState({
+    //       loading: false,
+    //       wrongPasswordAlert: "none"
+    //     });
+    //   } else {
+    //     this.setState({
+    //       loading: false,
+    //       loginError: "Wrong Password",
+    //       wrongPasswordAlert: "block"
+    //     });
+    //   }
+    //   //       this.router.navigate(['/home']);
+    // }, 3000);
     // this._authenticateService.login(this.model.username, this.model.password)
     //   .subscribe(resp => {
     //     console.log(resp);
@@ -130,23 +134,23 @@ class LoginForm extends Component {
                       </div>
                     )}
                 </div>
-                {this.state.loginError && this.state.loginError.length > 0 && (
+                {this.props.loginError && this.props.loginError.length > 0 && (
                   <div
                     styles={`display:${this.state.wrongPasswordAlert}`}
                     className="form-group alert alert-danger col-10 mx-auto"
                     role="alert"
                   >
-                    {this.state.loginError}
+                    {this.props.loginError}
                   </div>
                 )}
                 <div className="form-group">
                   <button
                     type="submit"
-                    disabled={this.state.loading}
+                    disabled={this.props.loading}
                     className="btn btn-primary"
                   >
                     Login
-                    {this.state.loading && (
+                    {this.props.loading && (
                       <img
                         alt=""
                         src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
@@ -162,5 +166,19 @@ class LoginForm extends Component {
     );
   }
 }
-export default LoginForm;
+const mapPropsToStore = ({ Authentication }) => {
+  return {
+    loginError: (Authentication && Authentication.loginError) || "",
+    loading: (Authentication && Authentication.loading) || false
+  };
+};
+const mapDispatchToProps = dispach => {
+  return {
+    dispachLogin: payload => dispach({ type: actions.LOGIN, payload })
+  };
+};
+export default connect(
+  mapPropsToStore,
+  mapDispatchToProps
+)(LoginForm);
 //[style.display]="wrongPasswordAlert"

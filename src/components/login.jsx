@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import LoginForm from "./login-form";
+import { connect } from "react-redux";
+
 import "./login.scss";
 
 class Login extends Component {
@@ -50,4 +52,4 @@ class Login extends Component {
   }
 }
 
-export default Login;
+export default connect()(Login);
