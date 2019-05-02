@@ -2,23 +2,35 @@ import React, { Component } from "react";
 import "./login.scss";
 
 class LoginForm extends Component {
+  state = {
+    loading: false,
+    wrongPasswordAlert: "",
+    username: "",
+    password: "",
+    loginError: ""
+  };
   title = "Socializer";
-  loading = false;
-  wrongPasswordAlert = "";
-  username = "";
-  password = "";
   usernameRef = null;
   passwordRef = null;
-  login() {
-    this.loading = true;
-    this.wrongPasswordAlert = "none";
+  login(e) {
+    e.preventDefault();
+    this.setState({
+      loading: true,
+      loginError: "",
+      wrongPasswordAlert: "none"
+    });
     setTimeout(() => {
-      if (this.username === "anubhav" && this.password === "a") {
-        this.wrongPasswordAlert = "none";
-        this.loading = false;
+      if (this.state.username === "anubhav" && this.state.password === "a") {
+        this.setState({
+          loading: false,
+          wrongPasswordAlert: "none"
+        });
       } else {
-        this.loginError = "Wrong Password";
-        this.wrongPasswordAlert = "block";
+        this.setState({
+          loading: false,
+          loginError: "Wrong Password",
+          wrongPasswordAlert: "block"
+        });
       }
       //       this.router.navigate(['/home']);
     }, 3000);
@@ -53,12 +65,14 @@ class LoginForm extends Component {
               <form
                 name="form"
                 className="col-lg-10 mx-auto"
-                onSubmit={this.login}
+                onSubmit={this.login.bind(this)}
                 noValidate
               >
                 <div
                   className={`form-group col-12 ${
-                    this.usernameRef && this.usernameRef.checkValidity()
+                    this.usernameRef &&
+                    this.usernameRef.value.length > 0 &&
+                    !this.usernameRef.checkValidity()
                       ? ""
                       : "has-error"
                   }`}
@@ -71,17 +85,25 @@ class LoginForm extends Component {
                     className="form-control lowercase"
                     placeholder="username"
                     name="username"
-                    value={this.username}
-                    onChange={e => (this.username = e.target.value)}
+                    value={this.state.username}
+                    onChange={e => {
+                      this.setState({ username: e.target.value });
+                    }}
                     required
                   />
-                  {this.usernameRef && this.usernameRef.checkValidity() && (
-                    <div className="help-block error">Username is required</div>
-                  )}
+                  {this.usernameRef &&
+                    this.usernameRef.value.length > 0 &&
+                    !this.usernameRef.checkValidity() && (
+                      <div className="help-block error">
+                        Username is required
+                      </div>
+                    )}
                 </div>
                 <div
                   className={`form-group col-12 ${
-                    this.passwordRef && this.passwordRef.checkValidity()
+                    this.passwordRef &&
+                    this.passwordRef.value.length > 0 &&
+                    !this.passwordRef.checkValidity()
                       ? ""
                       : "has-error"
                   }`}
@@ -94,31 +116,37 @@ class LoginForm extends Component {
                     className="form-control"
                     placeholder="password"
                     name="password"
-                    value={this.password}
-                    onChange={e => (this.password = e.target.value)}
+                    value={this.state.password}
+                    onChange={e => {
+                      this.setState({ password: e.target.value });
+                    }}
                     required
                   />
-                  {this.passwordRef && this.passwordRef.checkValidity() && (
-                    <div className="help-block error">Password is required</div>
-                  )}
+                  {this.passwordRef &&
+                    this.passwordRef.value.length > 0 &&
+                    !this.passwordRef.checkValidity() && (
+                      <div className="help-block error">
+                        Password is required
+                      </div>
+                    )}
                 </div>
-                {this.loginError && this.loginError.length > 0 && (
+                {this.state.loginError && this.state.loginError.length > 0 && (
                   <div
-                    styles="display:none"
+                    styles={`display:${this.state.wrongPasswordAlert}`}
                     className="form-group alert alert-danger col-10 mx-auto"
                     role="alert"
                   >
-                    {this.loginError}
+                    {this.state.loginError}
                   </div>
                 )}
                 <div className="form-group">
                   <button
                     type="submit"
-                    disabled={this.loading}
+                    disabled={this.state.loading}
                     className="btn btn-primary"
                   >
                     Login
-                    {this.loading && (
+                    {this.state.loading && (
                       <img
                         alt=""
                         src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
