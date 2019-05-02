@@ -3,7 +3,7 @@ import "./App.scss";
 import store from "./store";
 import Login from "./components/login";
 import { Provider } from "react-redux";
-import { Route, Link, BrowserRouter as Router } from "react-router-dom";
+import { Route, BrowserRouter as Router } from "react-router-dom";
 
 function App() {
   return (
