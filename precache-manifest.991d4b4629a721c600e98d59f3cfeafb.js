@@ -1,23 +1,23 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "4498ea8349e9e1ed11bda02df9939667",
+    "revision": "290b0cc33f2d9209ceda3ea74bb923bc",
     "url": "/Socializer_React/index.html"
   },
   {
-    "revision": "cb37ffe442e8820642d2",
+    "revision": "02f326677a9f38c58fb7",
     "url": "/Socializer_React/static/css/2.951b227e.chunk.css"
   },
   {
-    "revision": "089e92a12c3ac5855a80",
-    "url": "/Socializer_React/static/css/main.a1c5dc14.chunk.css"
+    "revision": "ea896effb1ab1ac7538a",
+    "url": "/Socializer_React/static/css/main.54f4cea6.chunk.css"
   },
   {
-    "revision": "cb37ffe442e8820642d2",
-    "url": "/Socializer_React/static/js/2.6d5379d4.chunk.js"
+    "revision": "02f326677a9f38c58fb7",
+    "url": "/Socializer_React/static/js/2.1c3e88ad.chunk.js"
   },
   {
-    "revision": "089e92a12c3ac5855a80",
-    "url": "/Socializer_React/static/js/main.9cd749af.chunk.js"
+    "revision": "ea896effb1ab1ac7538a",
+    "url": "/Socializer_React/static/js/main.753d5e8e.chunk.js"
   },
   {
     "revision": "c4cab018aa8675ce2c02",
