@@ -5,7 +5,6 @@ import "./login.scss";
 
 class LoginForm extends Component {
   state = {
-    wrongPasswordAlert: "",
     username: "",
     password: ""
   };
@@ -14,49 +13,14 @@ class LoginForm extends Component {
   passwordRef = null;
   login(e) {
     e.preventDefault();
-    this.setState({
-      loginError: "",
-      wrongPasswordAlert: "none"
-    });
-    this.props.dispachLogin({
-      username: this.state.username.toLowerCase(),
-      password: this.state.password
-    });
-    // v-arjjos@microsoft.com
-    // setTimeout(() => {
-    //   if (this.state.username === "anubhav" && this.state.password === "a") {
-    //     this.setState({
-    //       loading: false,
-    //       wrongPasswordAlert: "none"
-    //     });
-    //   } else {
-    //     this.setState({
-    //       loading: false,
-    //       loginError: "Wrong Password",
-    //       wrongPasswordAlert: "block"
-    //     });
-    //   }
-    //   //       this.router.navigate(['/home']);
-    // }, 3000);
-    // this._authenticateService.login(this.model.username, this.model.password)
-    //   .subscribe(resp => {
-    //     console.log(resp);
-    //     console.log(resp.message);
-    //     if (resp.response !== 'success') {
-    //       this.loginError = resp.message;
-    //       this.wrongPasswordAlert = 'block';
-    //     } else {
-    //       this.wrongPasswordAlert = 'none';
-    //       this.router.navigate(['/home']);
-    //     }
-    //     this.loading = false;
-    //     // this.router.navigate(['/home']);
-    //   }, err => {
-    //     console.log(err);
-    //     this.loginError = ' Server Error ';
-    //     this.loading = false;
-    //   });
+    e.target.checkValidity() &&
+      this.props.dispachLogin({
+        username: this.state.username.toLowerCase(),
+        password: this.state.password
+      });
   }
+  // v-arjjos@microsoft.com
+
   render() {
     return (
       <div className="col-lg-10 mx-auto">
@@ -74,9 +38,7 @@ class LoginForm extends Component {
               >
                 <div
                   className={`form-group col-12 ${
-                    this.usernameRef &&
-                    this.usernameRef.value.length > 0 &&
-                    !this.usernameRef.checkValidity()
+                    this.usernameRef && !this.usernameRef.checkValidity()
                       ? ""
                       : "has-error"
                   }`}
@@ -95,19 +57,13 @@ class LoginForm extends Component {
                     }}
                     required
                   />
-                  {this.usernameRef &&
-                    this.usernameRef.value.length > 0 &&
-                    !this.usernameRef.checkValidity() && (
-                      <div className="help-block error">
-                        Username is required
-                      </div>
-                    )}
+                  {this.usernameRef && !this.usernameRef.checkValidity() && (
+                    <div className="help-block error">Username is required</div>
+                  )}
                 </div>
                 <div
                   className={`form-group col-12 ${
-                    this.passwordRef &&
-                    this.passwordRef.value.length > 0 &&
-                    !this.passwordRef.checkValidity()
+                    this.passwordRef && !this.passwordRef.checkValidity()
                       ? ""
                       : "has-error"
                   }`}
@@ -126,17 +82,12 @@ class LoginForm extends Component {
                     }}
                     required
                   />
-                  {this.passwordRef &&
-                    this.passwordRef.value.length > 0 &&
-                    !this.passwordRef.checkValidity() && (
-                      <div className="help-block error">
-                        Password is required
-                      </div>
-                    )}
+                  {this.passwordRef && !this.passwordRef.checkValidity() && (
+                    <div className="help-block error">Password is required</div>
+                  )}
                 </div>
                 {this.props.loginError && this.props.loginError.length > 0 && (
                   <div
-                    styles={`display:${this.state.wrongPasswordAlert}`}
                     className="form-group alert alert-danger col-10 mx-auto"
                     role="alert"
                   >

@@ -1,2 +1,9 @@
 export const LOGIN = "LOGIN";
-export const _LOGIN = "_LOGIN";
+export const _LOGIN_SUCCESS = "_LOGIN_SUCCESS";
+export const _LOGIN_FAIL = "_LOGIN_FAIL";
+export const SEARCH = "SEARCH";
+export const _SEARCH_SUCCESS = "_SEARCH_SUCCESS";
+export const _SEARCH_FAIL = "_SEARCH_FAIL";
+export const GETUSER = "GETUSER";
+export const _GETUSER_SUCCESS = "_GETUSER_SUCCESS";
+export const _GETUSER_FAIL = "_GETUSER_FAIL";

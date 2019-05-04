@@ -1,8 +1,10 @@
 import { all, fork } from "redux-saga/effects";
-import  authSaga  from "./authSaga";
-
+import * as authSagas from "./authSaga";
+import * as userSagas from "./userSaga";
 function* mainSaga() {
-  yield all([fork(authSaga)]);
+  yield all(
+    [...Object.values(authSagas), ...Object.values(userSagas)].map(fork)
+  );
 }
 
 export default mainSaga;

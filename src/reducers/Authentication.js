@@ -7,20 +7,18 @@ const initialStore = {
 };
 export default function AuthReducer(store = initialStore, action) {
   switch (action.type) {
-    case actions._LOGIN:
-      if (action.payload.response === "success")
-        return {
-          ...store,
-          user: action.payload.user,
-          loading: false
-        };
-      else {
-        return {
-          ...store,
-          loginError: action.payload.message,
-          loading: false
-        };
-      }
+    case actions._LOGIN_SUCCESS:
+      return {
+        ...store,
+        user: action.payload,
+        loading: false
+      };
+    case actions._LOGIN_FAIL:
+      return {
+        ...store,
+        loginError: action.payload,
+        loading: false
+      };
     case actions.LOGIN:
       return {
         ...store,

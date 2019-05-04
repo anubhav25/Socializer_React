@@ -2,7 +2,6 @@ import { takeLatest, put } from "redux-saga/effects";
 import * as actions from "../actions";
 const baseUri = "https://mysocializer.herokuapp.com"; //"http://localhost:4000";
 function* login(action) {
-  console.log(action);
   try {
     let res = yield fetch(baseUri + "/api/login", {
       method: "POST",
@@ -12,11 +11,17 @@ function* login(action) {
       body: JSON.stringify(action.payload)
     });
     res = yield res.json();
-    yield put({ type: actions._LOGIN, payload: res });
+    if (res && res.response === "success" && res.user) {
+      yield put({ type: actions._LOGIN_SUCCESS, payload: res.user });
+    } else if (res && res.response === "fail" && res.message) {
+      yield put({ type: actions._LOGIN_FAIL, payload: res.message });
+    } else {
+      yield put({ type: actions._LOGIN_FAIL, payload: "SERVER ERROR" });
+    }
   } catch {
     yield put({
-      type: actions._LOGIN,
-      payload: { response: "fail", message: "SERVER ERROR" }
+      type: actions._LOGIN_FAIL,
+      payload: "SERVER ERROR"
     });
   }
 }

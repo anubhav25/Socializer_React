@@ -3,6 +3,8 @@ import "./App.scss";
 import Login from "./components/login";
 import { connect } from "react-redux";
 import { Route, BrowserRouter, Redirect } from "react-router-dom";
+import Profile from "./components/profile";
+import * as actions from "./actions";
 
 class App extends Component {
   render() {
@@ -18,19 +20,35 @@ class App extends Component {
         <Route
           path="/login"
           exact
-          render={() => (this.props.user ? <Redirect to="/home" /> : <Login />)}
+          render={() =>
+            this.props.user ? <Redirect to="/home" /> : <Login isLogin />
+          }
         />
         <Route
           path="/register"
           exact
-          render={() => (this.props.user ? <Redirect to="/home" /> : <Login />)}
+          render={() =>
+            this.props.user ? (
+              <Redirect to="/home" />
+            ) : (
+              <Login isLogin={false} />
+            )
+          }
         />
         <Route
           path="/home"
           exact
           render={() =>
-            this.props.user ? <h1>hello</h1> : <Redirect to="/login" />
+            this.props.user ? <Profile /> : <Redirect to="/login" />
           }
+        />
+        <Route
+          path="/profile/:username"
+          exact
+          render={e => {
+            this.props.dispatchSearch(e.match.params.username);
+            return <Profile />;
+          }}
         />
       </BrowserRouter>
     );
@@ -42,7 +60,12 @@ const mapPropsToStore = ({ Authentication }) => {
   };
 };
 const mapDispatchToProps = dispach => {
-  return {};
+  return {
+    dispatchSearch: username => {
+      console.log(username);
+      dispach({ type: actions.GETUSER, payload: username });
+    }
+  };
 };
 export default connect(
   mapPropsToStore,
