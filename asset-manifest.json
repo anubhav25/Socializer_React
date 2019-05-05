@@ -1,18 +1,18 @@
 {
   "files": {
-    "main.css": "/Socializer_React/static/css/main.54f4cea6.chunk.css",
-    "main.js": "/Socializer_React/static/js/main.753d5e8e.chunk.js",
-    "main.js.map": "/Socializer_React/static/js/main.753d5e8e.chunk.js.map",
+    "main.css": "/Socializer_React/static/css/main.46068dc8.chunk.css",
+    "main.js": "/Socializer_React/static/js/main.44c2bbd1.chunk.js",
+    "main.js.map": "/Socializer_React/static/js/main.44c2bbd1.chunk.js.map",
     "runtime~main.js": "/Socializer_React/static/js/runtime~main.727962d2.js",
     "runtime~main.js.map": "/Socializer_React/static/js/runtime~main.727962d2.js.map",
     "static/css/2.951b227e.chunk.css": "/Socializer_React/static/css/2.951b227e.chunk.css",
-    "static/js/2.1c3e88ad.chunk.js": "/Socializer_React/static/js/2.1c3e88ad.chunk.js",
-    "static/js/2.1c3e88ad.chunk.js.map": "/Socializer_React/static/js/2.1c3e88ad.chunk.js.map",
+    "static/js/2.3fed7d21.chunk.js": "/Socializer_React/static/js/2.3fed7d21.chunk.js",
+    "static/js/2.3fed7d21.chunk.js.map": "/Socializer_React/static/js/2.3fed7d21.chunk.js.map",
     "index.html": "/Socializer_React/index.html",
-    "precache-manifest.991d4b4629a721c600e98d59f3cfeafb.js": "/Socializer_React/precache-manifest.991d4b4629a721c600e98d59f3cfeafb.js",
+    "precache-manifest.3f3183151a9dc053f5d9be4181af11d2.js": "/Socializer_React/precache-manifest.3f3183151a9dc053f5d9be4181af11d2.js",
     "service-worker.js": "/Socializer_React/service-worker.js",
     "static/css/2.951b227e.chunk.css.map": "/Socializer_React/static/css/2.951b227e.chunk.css.map",
-    "static/css/main.54f4cea6.chunk.css.map": "/Socializer_React/static/css/main.54f4cea6.chunk.css.map",
+    "static/css/main.46068dc8.chunk.css.map": "/Socializer_React/static/css/main.46068dc8.chunk.css.map",
     "static/media/App.scss": "/Socializer_React/static/media/intro-bg.23c893ea.jpg"
   }
 }
