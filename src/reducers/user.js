@@ -1,7 +1,7 @@
 import * as actions from "../actions";
 
 const initialStore = {
-  tempuser: {},
+  tempuser: null,
   errMsg: "",
   searchItems: []
 };
@@ -10,22 +10,24 @@ export default function UserReducer(store = initialStore, action) {
     case actions._GETUSER_SUCCESS:
       return {
         ...store,
-        tempuser: action.payload,
+        tempuser: action.payload
       };
     case actions._GETUSER_FAIL:
       return {
         ...store,
-        errMsg: action.payload,
+        errMsg: action.payload
       };
     case actions._SEARCH_SUCCESS:
       return {
         ...store,
         searchItems: action.payload,
+        errMsg: ""
       };
     case actions._SEARCH_FAIL:
-    return {
+      return {
         ...store,
-        errMsg: action.payload,
+        searchItems: [],
+        errMsg: action.payload
       };
     default:
       return store;

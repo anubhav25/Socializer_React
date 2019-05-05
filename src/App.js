@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { Route, BrowserRouter, Redirect } from "react-router-dom";
 import Profile from "./components/profile";
 import * as actions from "./actions";
+import ChangePassword from "./components/change-password";
 
 class App extends Component {
   render() {
@@ -24,6 +25,7 @@ class App extends Component {
             this.props.user ? <Redirect to="/home" /> : <Login isLogin />
           }
         />
+        <Route path="/logout" exact render={() => <Redirect to="/login" />} />
         <Route
           path="/register"
           exact
@@ -40,6 +42,13 @@ class App extends Component {
           exact
           render={() =>
             this.props.user ? <Profile /> : <Redirect to="/login" />
+          }
+        />
+        <Route
+          path="/changepassword"
+          exact
+          render={() =>
+            this.props.user ? <ChangePassword /> : <Redirect to="/login" />
           }
         />
         <Route

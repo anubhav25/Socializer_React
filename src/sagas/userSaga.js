@@ -1,6 +1,5 @@
 import { takeLatest, put } from "redux-saga/effects";
 import * as actions from "../actions";
-const baseUri = "https://mysocializer.herokuapp.com"; //"http://localhost:4000";
 
 export function* searchSaga() {
   yield takeLatest(actions.SEARCH, search);
@@ -11,11 +10,11 @@ export function* getUserSaga() {
 
 function* search(action) {
   try {
-    let res = yield fetch(baseUri + "/api/search/" + action.payload);
+    let res = yield fetch(actions.baseUri + "/api/search/" + action.payload);
     res = yield res.json();
     if (res && res.length === 0) {
       yield put({
-        type: actions._SEARCH_SUCCESS,
+        type: actions._SEARCH_FAIL,
         payload: "No such User Found"
       });
     } else if (res && res.length > 0) {
@@ -36,7 +35,7 @@ function* search(action) {
 
 function* getuser(action) {
   try {
-    let res = yield fetch(baseUri + "/api/user/" + action.payload);
+    let res = yield fetch(actions.baseUri + "/api/user/" + action.payload);
     res = yield res.json();
     if (res && res.username) {
       yield put({

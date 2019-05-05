@@ -5,7 +5,7 @@ import * as actions from "../actions";
 import "./navbar.scss";
 
 class NavBar extends Component {
-  searchText = "";
+  state = { searchText: "" };
   focusOnSearch = false;
   title = "socializer";
   page = window.location.href || "";
@@ -15,11 +15,10 @@ class NavBar extends Component {
     let text = event.target.value;
     text = text.trim();
     if (text && text.length > 2) {
-      text !== this.searchText && this.props.dispatchSearch(text);
-      this.searchText = text;
+      text !== this.state.searchText && this.props.dispatchSearch(text);
+      this.setState({ searchText: text });
     } else {
-      this.items = [];
-      this.searchText = "";
+      this.setState({ searchText: "" });
     }
   }
   render() {
@@ -63,23 +62,31 @@ class NavBar extends Component {
                       </form>
                       {this.props.items && this.props.items.length > 0 && (
                         <div className="searchResults">
-                          {this.props.items.map(item => {
-                            return (
-                              <div className="searchResultItem">
-                                <img
-                                  alt=""
-                                  src={item.thumbnail}
-                                  height="35px"
-                                  width="35px"
-                                />
-                                <div>
-                                  <Link to={"/profile/" + item.username}>
-                                    {item.username}
-                                  </Link>
+                          {console.log(this.props)}
+                          {this.props.items
+                            .filter(() => {
+                              return this.state.searchText.length > 2;
+                            })
+                            .map(item => {
+                              return (
+                                <div
+                                  className="searchResultItem"
+                                  key={item._id}
+                                >
+                                  <img
+                                    alt=""
+                                    src={actions.baseUri + item.thumbnail}
+                                    height="35px"
+                                    width="35px"
+                                  />
+                                  <div>
+                                    <Link to={"/profile/" + item.username}>
+                                      {item.username}
+                                    </Link>
+                                  </div>
                                 </div>
-                              </div>
-                            );
-                          })}
+                              );
+                            })}
                         </div>
                       )}
                     </div>
@@ -161,6 +168,7 @@ class NavBar extends Component {
                     <Link
                       className="btn btn-outline-success buttonIcon pull-right"
                       to="/logout"
+                      onClick={this.props.dispatchLogout}
                     >
                       <span className="buttonText">logout&nbsp;</span>
                       <i className="fa fa-sign-out" />
@@ -178,6 +186,7 @@ class NavBar extends Component {
 const mapPropsToStore = store => {
   return {
     items: store.User.searchItems,
+    errMsg: store.User.errMsg,
     user: store.Authentication.user
   };
 };
@@ -185,6 +194,9 @@ const mapDispatchToProps = dispach => {
   return {
     dispatchSearch: text => {
       dispach({ type: actions.SEARCH, payload: text });
+    },
+    dispatchLogout: text => {
+      dispach({ type: actions.LOGOUT });
     }
   };
 };
